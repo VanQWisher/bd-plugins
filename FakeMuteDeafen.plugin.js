@@ -2,7 +2,7 @@
  * @name FakeMuteDeafen
  * @author Ryan.js
  * @authorId 154408842954801152
- * @version 2.0.1
+ * @version 2.0.0
  * @description Trick Discord into thinking you are muted or deafened when you're in VC.
  * @source https://github.com/VanQWisher/bd-plugins/tree/main
  * @updateUrl https://raw.githubusercontent.com/VanQWisher/bd-plugins/main/FakeMuteDeafen.plugin.js
@@ -19,7 +19,7 @@
 				github_username: 'VanQWisher'
 			}],
 			authorLink: 'https://github.com/vanqwisher',
-			version: '2.0.1',
+			version: '2.0.0',
 			description: "Trick Discord into thinking you are muted or deafened when you're in VC.",
 			github: 'https://github.com/vanqwisher/bd-plugins',
 			github_raw: 'https://raw.githubusercontent.com/VanQWisher/bd-plugins/main/FakeMuteDeafen.plugin.js'
