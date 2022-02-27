@@ -18,6 +18,7 @@ Trick Discord into thinking you are in a muted or deafened state when you're in 
 ## ⚠️ Note
 
 - Mobile users will always see you talking in a muted state. There is no way around this.
+- You have to to make sure you turn off Fake Mute before trying to join another channel, turn on camera, or basically anything with Discord.
 ## 📸 Gifs/Screenshot
 
 ![URL](https://cdn.discordapp.com/attachments/946987636004884500/946989286371237968/Tutorial.png)
