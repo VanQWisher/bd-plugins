@@ -2,13 +2,13 @@
  * @name FakeMuteDeafen
  * @author Ryan.js
  * @authorId 154408842954801152
- * @version 2.0.0
+ * @version 2.1.0
  * @description Trick Discord into thinking you are muted or deafened when you're in VC.
- * @source https://github.com/VanQWisher/bd-plugins/tree/main
- * @updateUrl https://raw.githubusercontent.com/VanQWisher/bd-plugins/main/FakeMuteDeafen.plugin.js
+ * @source https://github.com/VanQWisher/bd-plugins/tree/main/FakeMuteDeafen.js
+ * @updateUrl https://raw.githubusercontent.com/VanQWisher/bd-plugins/main/FakeMuteDeafen.js/FakeMuteDeafen.plugin.js
  */
 
- module.exports = (() => {
+module.exports = (() => {
 	const config = {
 		main: 'index.js',
 		info: {
@@ -19,30 +19,20 @@
 				github_username: 'VanQWisher'
 			}],
 			authorLink: 'https://github.com/vanqwisher',
-			version: '2.0.0',
+			version: '2.1.0',
 			description: "Trick Discord into thinking you are muted or deafened when you're in VC.",
 			github: 'https://github.com/vanqwisher/bd-plugins',
-			github_raw: 'https://raw.githubusercontent.com/VanQWisher/bd-plugins/main/FakeMuteDeafen.plugin.js'
+			github_raw: 'https://raw.githubusercontent.com/VanQWisher/bd-plugins/main/FakeMuteDeafen.js/FakeMuteDeafen.plugin.js'
 		},
 		changelog: [
 			{
-				title: 'Credits',
-				type: 'improved',
-				items: ['*Thanks ali0sam for the orginal script. I will keep the legacy going!*']
-			},
-			{
-				title: "Note",
 				type: 'fixed',
-				items: ['Mobile users will always see you talking in a muted state.\nThere is no way around this.']
+				title: "Fixes",
+				items: ['Plugin works again!']
 			},
 			{
-				title: "What's new in V 2.0",
-				type: 'added',
-				items: ['Display tutorial on startup.', 'Toggleable fake mute button near mute/deafen buttons.', 'Added settings pannel for toasts and tutorial.']
-			},
-			{
-				title: "Want to help?",
 				type: 'progress',
+				title: "Want to help?",
 				items: ['Feel free to join my server https://discord.gg/zDQJD2ZEb8']
 			},
 		],
@@ -52,13 +42,6 @@
 				id: 'tutorial',
 				name: 'Tutorial',
 				note: 'Displays how to use the plugin.',
-				value: true
-			},
-			{
-				type: 'switch',
-				id: 'enableToasts',
-				name: 'Enable Toasts',
-				note: 'Show Toasts when you turn fake mode on/off the plugin.',
 				value: true
 			}]
 	};
@@ -84,7 +67,7 @@
 		stop() { }
 	} : (([Plugin, Api]) => {
 		const plugin = (Plugin, Library) => {
-			const { Patcher, Toasts } = Library;
+			const { Patcher } = Library;
 			return class FakeMuteDeafen extends Plugin {
 				onStart() {
 					if (this.settings.tutorial) {
@@ -104,14 +87,14 @@
 						// Patch
 						const res = BdApi.Patcher.after("FakeMuteDeafen", node.__proto__, "render", (_, __, { props }) => {
 							// Add button
-							props.children[2].props.children.unshift(BdApi.React.createElement(PanelButton, {
+							props.children[1].props.children.unshift(BdApi.React.createElement(PanelButton, {
 								icon: () => enabled ? "On" : "Off",
 								tooltipText: enabled ? "Disable Fake Mute" : "Enable Fake Mute",
 								onClick: () => {
 									if (enabled) {
 										enabled = false;
 										WebSocket.prototype.send = WebSocket.prototype.original;
-										Toasts.show("Fake Mute Disabled!", { type: "info", timeout: 3000 });
+										BDFDB.NotificationUtils.toast("Fake Mute Disabled!", { type: 'info', timeout: 3000 })
 									} else {
 										enabled = true;
 										let text = new TextDecoder("utf-8");
@@ -124,7 +107,7 @@
 											}
 											WebSocket.prototype.original.apply(this, [data]);
 										}
-										Toasts.show("Fake Mute Enabled!", { type: "warning", timeout: 3000 });
+										BDFDB.NotificationUtils.toast("Fake Mute Enabled!", { type: 'warning', timeout: 3000 })
 									}
 								}
 							}))
